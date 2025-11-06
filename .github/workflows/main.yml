@@ -23,7 +23,7 @@ jobs:
         with:
           # 1. 确认这里是你自己的 GitHub 用户名
           # (如果你就是 Peter-JXL，那就不用改)
-          user: Peter-JXL 
+          user: RanderDouble
           
           # 2. Token (它会从 "production" 环境中获取)
           token: ${{ secrets.METRICS_TOKEN }}
@@ -45,5 +45,5 @@ jobs:
           plugin_starlists_limit_repositories: 0
           plugin_starlists_only: Awesome
           plugin_code: yes
-          plugin_code_languages: javascript, typescript
+          # plugin_code_languages: javascript, typescript
           plugin_code_load: 400
