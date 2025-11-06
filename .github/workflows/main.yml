@@ -9,43 +9,41 @@ on:
 jobs:
   github-metrics:
     runs-on: ubuntu-latest
+    
+    # -----------------------------------
+    # 关键：把这个加回来！
+    environment: 
+      name: production
+    # -----------------------------------
+      
     permissions:
       contents: write  # 必须，用来写入生成的 SVG 文件
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          # 1. 必须：把这里换成你自己的 GitHub 用户名！
-          user: RanderDouble
+          # 1. 确认这里是你自己的 GitHub 用户名
+          # (如果你就是 Peter-JXL，那就不用改)
+          user: Peter-JXL 
           
-          # 2. 必须：你的 Token (查看下面的设置步骤)
+          # 2. Token (它会从 "production" 环境中获取)
           token: ${{ secrets.METRICS_TOKEN }}
 
-          # 3. 基础配置 (来自你的原始文件)
+          # 3. 基础配置
           template: classic
           config_timezone: Asia/Shanghai
           
-          # 4. 基础板块 (你想显示在主 SVG 上的内容)
-          # (header, activity, community, repositories, metadata 都是默认值)
+          # 4. 基础板块
           base: header, activity, community, repositories, metadata
 
-          # 5. 合并所有插件！
-          # (把所有 plugin_...: yes 和它们的配置都放在这里)
-          
-          # Half-year calendar 插件
+          # 5. 合并的所有插件
           plugin_isocalendar: yes
-
-          # Recently starred 插件
           plugin_stars: yes
           plugin_stars_limit: 3
-
-          # Featured star list languages 插件
           plugin_starlists: yes
           plugin_starlists_languages: yes
           plugin_starlists_limit_languages: 8
           plugin_starlists_limit_repositories: 0
           plugin_starlists_only: Awesome
-
-          # Code snippet 插件
           plugin_code: yes
           plugin_code_languages: javascript, typescript
           plugin_code_load: 400
