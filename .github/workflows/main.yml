@@ -1,32 +1,51 @@
-name: Metrics
+name: GitHub Metrics
 on:
-  # Schedule updates (each hour)
-  schedule: [{cron: "0 * * * *"}]
-  # Lines below let you run workflow manually and on each commit
+  # 自动更新 (例如每天一次)
+  schedule: [{cron: "0 0 * * *"}]
+  # 允许手动运行
   workflow_dispatch:
+  # 每次 push 到 master/main 分支时运行
   push: {branches: ["master", "main"]}
 jobs:
   github-metrics:
     runs-on: ubuntu-latest
-    environment: 
-      name: production
     permissions:
-      contents: write
+      contents: write  # 必须，用来写入生成的 SVG 文件
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          # Your GitHub token
-          # The following scopes are required:
-          #  - public_access (default scope)
-          # The following additional scopes may be required:
-          #  - read:org      (for organization related metrics)
-          #  - read:user     (for user related data)
-          #  - read:packages (for some packages related data)
-          #  - repo          (optional, if you want to include private repositories)
+          # 1. 必须：把这里换成你自己的 GitHub 用户名！
+          user: RanderDouble
+          
+          # 2. 必须：你的 Token (查看下面的设置步骤)
           token: ${{ secrets.METRICS_TOKEN }}
 
-          # Options
-          user: Peter-JXL
+          # 3. 基础配置 (来自你的原始文件)
           template: classic
-          base: header, activity, community, repositories, metadata
           config_timezone: Asia/Shanghai
+          
+          # 4. 基础板块 (你想显示在主 SVG 上的内容)
+          # (header, activity, community, repositories, metadata 都是默认值)
+          base: header, activity, community, repositories, metadata
+
+          # 5. 合并所有插件！
+          # (把所有 plugin_...: yes 和它们的配置都放在这里)
+          
+          # Half-year calendar 插件
+          plugin_isocalendar: yes
+
+          # Recently starred 插件
+          plugin_stars: yes
+          plugin_stars_limit: 3
+
+          # Featured star list languages 插件
+          plugin_starlists: yes
+          plugin_starlists_languages: yes
+          plugin_starlists_limit_languages: 8
+          plugin_starlists_limit_repositories: 0
+          plugin_starlists_only: Awesome
+
+          # Code snippet 插件
+          plugin_code: yes
+          plugin_code_languages: javascript, typescript
+          plugin_code_load: 400
