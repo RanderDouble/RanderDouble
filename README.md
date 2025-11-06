@@ -3,3 +3,5 @@
 ![Rander's GitHub stats](https://github-readme-stats.vercel.app/api?username=RanderDouble&show_icons=true&theme=dracula)
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=RanderDouble)
+
+![Metrics](/github-metrics.svg)
